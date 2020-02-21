@@ -2,8 +2,12 @@ from botocore.exceptions import ProfileNotFound
 import getpass
 
 
-def yubikey_totp_prompter(prompt):
-    return getpass.getpass(prompt)
+class YubikeyTotpPrompter(object):
+    def __init__(self, mfa_serial):
+        self.mfa_serial = mfa_serial
+
+    def __call__(self, prompt):
+        return getpass.getpass(prompt)
 
 
 def inject_yubikey_totp_prompter(session, **kwargs):
@@ -19,7 +23,7 @@ def inject_yubikey_totp_prompter(session, **kwargs):
         return
 
     assume_role_provider = providers.get_provider("assume-role")
-    assume_role_provider._prompter = yubikey_totp_prompter
+    assume_role_provider._prompter = YubikeyTotpPrompter(mfa_serial)
 
 
 def awscli_initialize(cli):
