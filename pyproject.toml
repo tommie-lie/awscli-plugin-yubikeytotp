@@ -1,9 +1,23 @@
 [tool.poetry]
 name = "awscli-plugin-yubikeytotp"
-version = "0.1.0.dev1"
+version = "0.1.1.dev1"
 description = ""
 authors = ["Thomas Liebetraut <thomas@tommie-lie.de>"]
 license = "GPL-3.0-or-later"
+
+repository = "https://github.com/tommie-lie/awscli-plugin-yubikeytotp"
+documentation = "https://github.com/tommie-lie/awscli-plugin-yubikeytotp/blob/master/README.md"
+
+readme = "README.md"
+
+keywords = ["aws", "aws-cli", "boto3", "yubikey"]
+
+classifiers = [
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators"
+]
+
 
 [tool.poetry.dependencies]
 python = "^3.7"
