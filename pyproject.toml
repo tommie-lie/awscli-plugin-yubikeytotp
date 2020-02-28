@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "awscli-plugin-yubikeytotp"
-version = "0.1.1.dev1"
+version = "1.0.0.b1"
 description = ""
 authors = ["Thomas Liebetraut <thomas@tommie-lie.de>"]
 license = "GPL-3.0-or-later"
