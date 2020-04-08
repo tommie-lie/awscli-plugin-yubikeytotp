@@ -29,7 +29,7 @@ class YkLogin(BasicCommand):
             seconds_to_expire = int(credentials._seconds_remaining())
             print(
                 "The acquired credentials will be valid for {:.0f}:{:02.0f} minutes".format(
-                    seconds_to_expire / 60, seconds_to_expire % 60
+                    seconds_to_expire // 60, seconds_to_expire % 60
                 ),
                 file=sys.stderr,
             )
