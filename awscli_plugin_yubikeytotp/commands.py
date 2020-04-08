@@ -20,7 +20,10 @@ class YkLogin(BasicCommand):
         frozen_credentials = credentials.get_frozen_credentials()
         print("export AWS_ACCESS_KEY_ID={}".format(frozen_credentials.access_key))
         print("export AWS_SECRET_ACCESS_KEY={}".format(frozen_credentials.secret_key))
-        print("export AWS_SESSION_TOKEN={}".format(frozen_credentials.token))
+        if frozen_credentials.token is None:
+            print("unset AWS_SESSION_TOKEN")
+        else:
+            print("export AWS_SESSION_TOKEN={}".format(frozen_credentials.token))
 
         seconds_to_expire = int(credentials._seconds_remaining())
         print(
