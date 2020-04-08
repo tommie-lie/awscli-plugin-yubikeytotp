@@ -1,5 +1,5 @@
 from .prompter import inject_yubikey_totp_prompter
-from .commands import YkLogin
+from .commands import SessionEnv
 
 
 def awscli_initialize(cli):
@@ -12,4 +12,4 @@ def awscli_initialize(cli):
 
 
 def awscli_register_commands(command_table, session, **kwargs):
-    command_table["yklogin"] = YkLogin(session)
+    command_table["session-env"] = SessionEnv(session)
