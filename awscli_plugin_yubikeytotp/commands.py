@@ -1,5 +1,5 @@
 from awscli.customizations.commands import BasicCommand
-
+import sys
 from . import boto_plugin
 
 
@@ -25,10 +25,12 @@ class YkLogin(BasicCommand):
         else:
             print("export AWS_SESSION_TOKEN={}".format(frozen_credentials.token))
 
-        seconds_to_expire = int(credentials._seconds_remaining())
-        print(
-            "The acquired credentials will be valid for {:.0f}:{:02.0f} minutes".format(
-                seconds_to_expire / 60, seconds_to_expire % 60
+        if hasattr(credentials, "_seconds_remaining"):
+            seconds_to_expire = int(credentials._seconds_remaining())
+            print(
+                "The acquired credentials will be valid for {:.0f}:{:02.0f} minutes".format(
+                    seconds_to_expire / 60, seconds_to_expire % 60
+                ),
+                file=sys.stderr,
             )
-        )
         return 0
