@@ -29,6 +29,10 @@ $ pip install --user awscli-plugin-yubikeytotp
 To enable the plugin, add this to your `~/.aws/config`:
 ```
 [plugins]
+# The next line is required if you are using CLI v2
+# Use the path that `pip` installed the package to - this one is in user mode
+cli_legacy_plugin_path = /home/myhomefolder/.local/lib/python3.8/site-packages/
+
 yubikeytotp = awscli_plugin_yubikeytotp
 ```
 Also make sure to have your MFA ARN configured for your profile:
