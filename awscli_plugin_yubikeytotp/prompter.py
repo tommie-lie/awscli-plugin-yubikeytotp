@@ -26,9 +26,9 @@ except ImportError:
 
 
 class YubikeyTotpPrompter(object):
-    def __init__(self, mfa_serial, oath_key_name, original_prompter=None):
+    def __init__(self, mfa_serial, mfa_alias, original_prompter=None):
         self.mfa_serial = mfa_serial
-        self.oath_key_name = oath_key_name
+        self.mfa_alias = mfa_alias
         self._original_prompter = original_prompter
 
     def __call__(self, prompt):
@@ -37,13 +37,13 @@ class YubikeyTotpPrompter(object):
                 ["ykman", "oath", "list"], capture_output=True, check=True
             )
             available_keys = available_keys_result.stdout.decode("utf-8").split()
-            available_keys.index(self.oath_key_name)
+            available_keys.index(self.mfa_alias)
 
             console_print(
                 "Generating OATH code on YubiKey. You may have to touch your YubiKey to proceed..."
             )
             ykman_result = subprocess.run(
-                ["ykman", "oath", "code", "-s", self.oath_key_name], capture_output=True
+                ["ykman", "oath", "code", "-s", self.mfa_alias], capture_output=True
             )
             console_print("Successfully created OATH code.")
             token = ykman_result.stdout.decode("utf-8").strip()
@@ -70,15 +70,15 @@ def inject_yubikey_totp_prompter(session, **kwargs):
 
     config = session.get_scoped_config()
     mfa_serial = config.get("mfa_serial")
-    oath_key_name = config.get("oath_key_name")
+    mfa_alias = config.get("mfa_alias")
     if mfa_serial is None:
         # no MFA, so don't interfere with regular flow
         return
 
-    if oath_key_name is None:
-        oath_key_name = mfa_serial
+    if mfa_alias is None:
+        mfa_alias = mfa_serial
     assume_role_provider = providers.get_provider("assume-role")
     original_prompter = assume_role_provider._prompter
     assume_role_provider._prompter = YubikeyTotpPrompter(
-        mfa_serial, oath_key_name, original_prompter=original_prompter
+        mfa_serial, mfa_alias, original_prompter=original_prompter
     )

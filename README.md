@@ -42,7 +42,7 @@ role_arn = arn:aws:iam::...
 mfa_serial = arn:aws:iam::...
 source_profile = default
 # You can also override the key name (useful if you used a "friendly" key name for when you're using the console)
-oath_key_name = shinykey
+mfa_alias = shinykey
 ```
 
 
