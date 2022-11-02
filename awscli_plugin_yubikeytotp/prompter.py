@@ -33,7 +33,7 @@ class YubikeyTotpPrompter(object):
     def __call__(self, prompt):
         try:
             available_keys_result = subprocess.run(
-                ["ykman", "oath", "list"], capture_output=True, check=True
+                ["ykman", "oath", "accounts", "list"], capture_output=True, check=True
             )
             available_keys = available_keys_result.stdout.decode("utf-8").split()
             available_keys.index(self.mfa_serial)
@@ -42,7 +42,7 @@ class YubikeyTotpPrompter(object):
                 "Generating OATH code on YubiKey. You may have to touch your YubiKey to proceed..."
             )
             ykman_result = subprocess.run(
-                ["ykman", "oath", "code", "-s", self.mfa_serial], capture_output=True
+                ["ykman", "oath", "accounts", "code", "-s", self.mfa_serial], capture_output=True
             )
             console_print("Successfully created OATH code.")
             token = ykman_result.stdout.decode("utf-8").strip()
