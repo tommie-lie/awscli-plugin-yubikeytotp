@@ -107,22 +107,22 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "cryptography"
-version = "3.3.2"
+version = "39.0.0"
 description = "cryptography is a package which provides cryptographic recipes and primitives to Python developers."
 category = "main"
 optional = false
-python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*"
+python-versions = ">=3.6"
 
 [package.dependencies]
 cffi = ">=1.12"
-six = ">=1.4.1"
 
 [package.extras]
-docs = ["sphinx (>=1.6.5,!=1.8.0,!=3.1.0,!=3.1.1)", "sphinx-rtd-theme"]
-docstest = ["doc8", "pyenchant (>=1.6.11)", "twine (>=1.12.0)", "sphinxcontrib-spelling (>=4.0.1)"]
-pep8test = ["black", "flake8", "flake8-import-order", "pep8-naming"]
+docs = ["sphinx (>=1.6.5,!=1.8.0,!=3.1.0,!=3.1.1,!=5.2.0,!=5.2.0.post0)", "sphinx-rtd-theme"]
+docstest = ["pyenchant (>=1.6.11)", "twine (>=1.12.0)", "sphinxcontrib-spelling (>=4.0.1)"]
+pep8test = ["black", "ruff"]
+sdist = ["setuptools-rust (>=0.11.4)"]
 ssh = ["bcrypt (>=3.1.5)"]
-test = ["pytest (>=3.6.0,!=3.9.0,!=3.9.1,!=3.9.2)", "pretend", "iso8601", "pytz", "hypothesis (>=1.11.4,!=3.79.2)"]
+test = ["pytest (>=6.2.0)", "pytest-benchmark", "pytest-cov", "pytest-subtests", "pytest-xdist", "pretend", "iso8601", "pytz", "hypothesis (>=1.11.4,!=3.79.2)"]
 
 [[package]]
 name = "docutils"
@@ -134,19 +134,17 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "fido2"
-version = "0.8.1"
-description = "Python based FIDO 2.0 library"
+version = "1.1.0"
+description = "FIDO2/WebAuthn library for implementing clients and servers."
 category = "main"
 optional = false
-python-versions = ">=2.7.6,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*"
+python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
-cryptography = ">=1.5"
-six = "*"
-uhid-freebsd = {version = ">=1.2.1", markers = "platform_system == \"FreeBSD\""}
+cryptography = ">=2.6,<35 || >35,<40"
 
 [package.extras]
-pcsc = ["pyscard"]
+pcsc = ["pyscard (>=1.9,<3)"]
 
 [[package]]
 name = "importlib-metadata"
@@ -166,9 +164,80 @@ perf = ["ipython"]
 testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "flake8 (<5)", "pytest-cov", "pytest-enabler (>=1.3)", "packaging", "pyfakefs", "flufl.flake8", "pytest-perf (>=0.9.2)", "pytest-black (>=0.3.7)", "pytest-mypy (>=0.9.1)", "pytest-flake8", "importlib-resources (>=1.3)"]
 
 [[package]]
+name = "importlib-resources"
+version = "5.10.2"
+description = "Read resources from Python packages"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+zipp = {version = ">=3.1.0", markers = "python_version < \"3.10\""}
+
+[package.extras]
+docs = ["sphinx (>=3.5)", "jaraco.packaging (>=9)", "rst.linker (>=1.9)", "furo", "sphinx-lint", "jaraco.tidelift (>=1.4)"]
+testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "flake8 (<5)", "pytest-cov", "pytest-enabler (>=1.3)", "pytest-black (>=0.3.7)", "pytest-mypy (>=0.9.1)", "pytest-flake8"]
+
+[[package]]
+name = "jaraco.classes"
+version = "3.2.3"
+description = "Utility functions for Python class constructs"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+more-itertools = "*"
+
+[package.extras]
+docs = ["sphinx (>=3.5)", "jaraco.packaging (>=9)", "rst.linker (>=1.9)", "jaraco.tidelift (>=1.4)"]
+testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "flake8 (<5)", "pytest-cov", "pytest-enabler (>=1.3)", "pytest-black (>=0.3.7)", "pytest-mypy (>=0.9.1)"]
+
+[[package]]
+name = "jeepney"
+version = "0.8.0"
+description = "Low-level, pure Python DBus protocol wrapper."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+test = ["pytest", "pytest-trio", "pytest-asyncio (>=0.17)", "testpath", "trio", "async-timeout"]
+trio = ["trio", "async-generator"]
+
+[[package]]
 name = "jmespath"
 version = "1.0.1"
 description = "JSON Matching Expressions"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[[package]]
+name = "keyring"
+version = "23.13.1"
+description = "Store and access your passwords safely."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+importlib-metadata = {version = ">=4.11.4", markers = "python_version < \"3.12\""}
+importlib-resources = {version = "*", markers = "python_version < \"3.9\""}
+"jaraco.classes" = "*"
+jeepney = {version = ">=0.4.2", markers = "sys_platform == \"linux\""}
+pywin32-ctypes = {version = ">=0.2.0", markers = "sys_platform == \"win32\""}
+SecretStorage = {version = ">=3.2", markers = "sys_platform == \"linux\""}
+
+[package.extras]
+completion = ["shtab"]
+docs = ["sphinx (>=3.5)", "jaraco.packaging (>=9)", "rst.linker (>=1.9)", "furo", "jaraco.tidelift (>=1.4)"]
+testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "flake8 (<5)", "pytest-cov", "pytest-enabler (>=1.3)", "pytest-black (>=0.3.7)", "pytest-mypy (>=0.9.1)", "pytest-flake8"]
+
+[[package]]
+name = "more-itertools"
+version = "9.0.0"
+description = "More routines for operating on iterables, beyond itertools"
 category = "main"
 optional = false
 python-versions = ">=3.7"
@@ -198,22 +267,6 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [[package]]
-name = "pyopenssl"
-version = "21.0.0"
-description = "Python wrapper module around the OpenSSL library"
-category = "main"
-optional = false
-python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*"
-
-[package.dependencies]
-cryptography = ">=3.3"
-six = ">=1.5.2"
-
-[package.extras]
-docs = ["sphinx", "sphinx-rtd-theme"]
-test = ["flaky", "pretend", "pytest (>=3.0.1)"]
-
-[[package]]
 name = "pyscard"
 version = "2.0.5"
 description = "Smartcard module for Python."
@@ -237,12 +290,20 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
 six = ">=1.5"
 
 [[package]]
-name = "pyusb"
-version = "1.2.1"
-description = "Python USB access module"
+name = "pywin32"
+version = "305"
+description = "Python for Window Extensions"
 category = "main"
 optional = false
-python-versions = ">=3.6.0"
+python-versions = "*"
+
+[[package]]
+name = "pywin32-ctypes"
+version = "0.2.0"
+description = ""
+category = "main"
+optional = false
+python-versions = "*"
 
 [[package]]
 name = "pyyaml"
@@ -286,6 +347,18 @@ botocore = ">=1.12.36,<2.0a.0"
 crt = ["botocore[crt] (>=1.20.29,<2.0a.0)"]
 
 [[package]]
+name = "secretstorage"
+version = "3.3.3"
+description = "Python bindings to FreeDesktop.org Secret Service API"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+cryptography = ">=2.0"
+jeepney = ">=0.6"
+
+[[package]]
 name = "six"
 version = "1.16.0"
 description = "Python 2 and 3 compatibility utilities"
@@ -318,14 +391,6 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
-name = "uhid-freebsd"
-version = "1.2.2"
-description = "Get information on FreeBSD uhid devices."
-category = "main"
-optional = false
-python-versions = "*"
-
-[[package]]
 name = "urllib3"
 version = "1.26.14"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
@@ -340,20 +405,19 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 
 [[package]]
 name = "yubikey-manager"
-version = "3.1.2"
+version = "5.0.0"
 description = "Tool for managing your YubiKey configuration."
 category = "main"
 optional = false
-python-versions = "*"
+python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
-click = "*"
-cryptography = "*"
-fido2 = ">=0.7,<0.9"
-pyopenssl = "*"
-pyscard = "*"
-pyusb = "*"
-six = "*"
+click = ">=8.0,<9.0"
+cryptography = ">=3.0,<41"
+fido2 = ">=1.0,<2.0"
+keyring = ">=23.4,<24.0"
+pyscard = ">=2.0,<3.0"
+pywin32 = {version = ">=223", markers = "sys_platform == \"win32\""}
 
 [[package]]
 name = "zipp"
@@ -369,8 +433,8 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "flake8 (<5)", "pytest-co
 
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.7,<3.10"
-content-hash = "9e0b6509fb4d5ce8db3b827be615ae8124540ebfc487ca0edf5a5c33cd2a8e51"
+python-versions = "^3.7"
+content-hash = "7981e4804a5f73815a4b2af3cd0510c752c09af7caa99796564d0943d6ea16f3"
 
 [metadata.files]
 appdirs = [
@@ -468,35 +532,65 @@ colorama = [
     {file = "colorama-0.4.4.tar.gz", hash = "sha256:5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b"},
 ]
 cryptography = [
-    {file = "cryptography-3.3.2-cp27-cp27m-macosx_10_10_x86_64.whl", hash = "sha256:541dd758ad49b45920dda3b5b48c968f8b2533d8981bcdb43002798d8f7a89ed"},
-    {file = "cryptography-3.3.2-cp27-cp27m-manylinux1_x86_64.whl", hash = "sha256:49570438e60f19243e7e0d504527dd5fe9b4b967b5a1ff21cc12b57602dd85d3"},
-    {file = "cryptography-3.3.2-cp27-cp27m-manylinux2010_x86_64.whl", hash = "sha256:a9a4ac9648d39ce71c2f63fe7dc6db144b9fa567ddfc48b9fde1b54483d26042"},
-    {file = "cryptography-3.3.2-cp27-cp27m-win32.whl", hash = "sha256:aa4969f24d536ae2268c902b2c3d62ab464b5a66bcb247630d208a79a8098e9b"},
-    {file = "cryptography-3.3.2-cp27-cp27m-win_amd64.whl", hash = "sha256:1bd0ccb0a1ed775cd7e2144fe46df9dc03eefd722bbcf587b3e0616ea4a81eff"},
-    {file = "cryptography-3.3.2-cp27-cp27mu-manylinux1_x86_64.whl", hash = "sha256:e18e6ab84dfb0ab997faf8cca25a86ff15dfea4027b986322026cc99e0a892da"},
-    {file = "cryptography-3.3.2-cp27-cp27mu-manylinux2010_x86_64.whl", hash = "sha256:c7390f9b2119b2b43160abb34f63277a638504ef8df99f11cb52c1fda66a2e6f"},
-    {file = "cryptography-3.3.2-cp36-abi3-macosx_10_10_x86_64.whl", hash = "sha256:0d7b69674b738068fa6ffade5c962ecd14969690585aaca0a1b1fc9058938a72"},
-    {file = "cryptography-3.3.2-cp36-abi3-manylinux1_x86_64.whl", hash = "sha256:922f9602d67c15ade470c11d616f2b2364950602e370c76f0c94c94ae672742e"},
-    {file = "cryptography-3.3.2-cp36-abi3-manylinux2010_x86_64.whl", hash = "sha256:a0f0b96c572fc9f25c3f4ddbf4688b9b38c69836713fb255f4a2715d93cbaf44"},
-    {file = "cryptography-3.3.2-cp36-abi3-manylinux2014_aarch64.whl", hash = "sha256:a777c096a49d80f9d2979695b835b0f9c9edab73b59e4ceb51f19724dda887ed"},
-    {file = "cryptography-3.3.2-cp36-abi3-win32.whl", hash = "sha256:3c284fc1e504e88e51c428db9c9274f2da9f73fdf5d7e13a36b8ecb039af6e6c"},
-    {file = "cryptography-3.3.2-cp36-abi3-win_amd64.whl", hash = "sha256:7951a966613c4211b6612b0352f5bf29989955ee592c4a885d8c7d0f830d0433"},
-    {file = "cryptography-3.3.2.tar.gz", hash = "sha256:5a60d3780149e13b7a6ff7ad6526b38846354d11a15e21068e57073e29e19bed"},
+    {file = "cryptography-39.0.0-cp36-abi3-macosx_10_12_universal2.whl", hash = "sha256:c52a1a6f81e738d07f43dab57831c29e57d21c81a942f4602fac7ee21b27f288"},
+    {file = "cryptography-39.0.0-cp36-abi3-macosx_10_12_x86_64.whl", hash = "sha256:80ee674c08aaef194bc4627b7f2956e5ba7ef29c3cc3ca488cf15854838a8f72"},
+    {file = "cryptography-39.0.0-cp36-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_24_aarch64.whl", hash = "sha256:887cbc1ea60786e534b00ba8b04d1095f4272d380ebd5f7a7eb4cc274710fad9"},
+    {file = "cryptography-39.0.0-cp36-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:6f97109336df5c178ee7c9c711b264c502b905c2d2a29ace99ed761533a3460f"},
+    {file = "cryptography-39.0.0-cp36-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:1a6915075c6d3a5e1215eab5d99bcec0da26036ff2102a1038401d6ef5bef25b"},
+    {file = "cryptography-39.0.0-cp36-abi3-manylinux_2_24_x86_64.whl", hash = "sha256:76c24dd4fd196a80f9f2f5405a778a8ca132f16b10af113474005635fe7e066c"},
+    {file = "cryptography-39.0.0-cp36-abi3-manylinux_2_28_aarch64.whl", hash = "sha256:bae6c7f4a36a25291b619ad064a30a07110a805d08dc89984f4f441f6c1f3f96"},
+    {file = "cryptography-39.0.0-cp36-abi3-manylinux_2_28_x86_64.whl", hash = "sha256:875aea1039d78557c7c6b4db2fe0e9d2413439f4676310a5f269dd342ca7a717"},
+    {file = "cryptography-39.0.0-cp36-abi3-musllinux_1_1_aarch64.whl", hash = "sha256:f6c0db08d81ead9576c4d94bbb27aed8d7a430fa27890f39084c2d0e2ec6b0df"},
+    {file = "cryptography-39.0.0-cp36-abi3-musllinux_1_1_x86_64.whl", hash = "sha256:f3ed2d864a2fa1666e749fe52fb8e23d8e06b8012e8bd8147c73797c506e86f1"},
+    {file = "cryptography-39.0.0-cp36-abi3-win32.whl", hash = "sha256:f671c1bb0d6088e94d61d80c606d65baacc0d374e67bf895148883461cd848de"},
+    {file = "cryptography-39.0.0-cp36-abi3-win_amd64.whl", hash = "sha256:e324de6972b151f99dc078defe8fb1b0a82c6498e37bff335f5bc6b1e3ab5a1e"},
+    {file = "cryptography-39.0.0-pp38-pypy38_pp73-macosx_10_12_x86_64.whl", hash = "sha256:754978da4d0457e7ca176f58c57b1f9de6556591c19b25b8bcce3c77d314f5eb"},
+    {file = "cryptography-39.0.0-pp38-pypy38_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:1ee1fd0de9851ff32dbbb9362a4d833b579b4a6cc96883e8e6d2ff2a6bc7104f"},
+    {file = "cryptography-39.0.0-pp38-pypy38_pp73-manylinux_2_24_x86_64.whl", hash = "sha256:fec8b932f51ae245121c4671b4bbc030880f363354b2f0e0bd1366017d891458"},
+    {file = "cryptography-39.0.0-pp38-pypy38_pp73-manylinux_2_28_x86_64.whl", hash = "sha256:407cec680e811b4fc829de966f88a7c62a596faa250fc1a4b520a0355b9bc190"},
+    {file = "cryptography-39.0.0-pp38-pypy38_pp73-win_amd64.whl", hash = "sha256:7dacfdeee048814563eaaec7c4743c8aea529fe3dd53127313a792f0dadc1773"},
+    {file = "cryptography-39.0.0-pp39-pypy39_pp73-macosx_10_12_x86_64.whl", hash = "sha256:ad04f413436b0781f20c52a661660f1e23bcd89a0e9bb1d6d20822d048cf2856"},
+    {file = "cryptography-39.0.0-pp39-pypy39_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:50386acb40fbabbceeb2986332f0287f50f29ccf1497bae31cf5c3e7b4f4b34f"},
+    {file = "cryptography-39.0.0-pp39-pypy39_pp73-manylinux_2_24_x86_64.whl", hash = "sha256:e5d71c5d5bd5b5c3eebcf7c5c2bb332d62ec68921a8c593bea8c394911a005ce"},
+    {file = "cryptography-39.0.0-pp39-pypy39_pp73-manylinux_2_28_x86_64.whl", hash = "sha256:844ad4d7c3850081dffba91cdd91950038ee4ac525c575509a42d3fc806b83c8"},
+    {file = "cryptography-39.0.0-pp39-pypy39_pp73-win_amd64.whl", hash = "sha256:e0a05aee6a82d944f9b4edd6a001178787d1546ec7c6223ee9a848a7ade92e39"},
+    {file = "cryptography-39.0.0.tar.gz", hash = "sha256:f964c7dcf7802d133e8dbd1565914fa0194f9d683d82411989889ecd701e8adf"},
 ]
 docutils = [
     {file = "docutils-0.16-py2.py3-none-any.whl", hash = "sha256:0c5b78adfbf7762415433f5515cd5c9e762339e23369dbe8000d84a4bf4ab3af"},
     {file = "docutils-0.16.tar.gz", hash = "sha256:c2de3a60e9e7d07be26b7f2b00ca0309c207e06c100f9cc2a94931fc75a478fc"},
 ]
 fido2 = [
-    {file = "fido2-0.8.1.tar.gz", hash = "sha256:449068f6876f397c8bb96ebc6a75c81c2692f045126d3f13ece21d409acdf7c3"},
+    {file = "fido2-1.1.0-py3-none-any.whl", hash = "sha256:5fe2f6fc06429d9229660bcd60a6573b185706cf454876224a906f83f056d207"},
+    {file = "fido2-1.1.0.tar.gz", hash = "sha256:2b4b4e620c2100442c20678e0e951ad6d1efb3ba5ca8ebb720c4c8d543293674"},
 ]
 importlib-metadata = [
     {file = "importlib_metadata-6.0.0-py3-none-any.whl", hash = "sha256:7efb448ec9a5e313a57655d35aa54cd3e01b7e1fbcf72dce1bf06119420f5bad"},
     {file = "importlib_metadata-6.0.0.tar.gz", hash = "sha256:e354bedeb60efa6affdcc8ae121b73544a7aa74156d047311948f6d711cd378d"},
 ]
+importlib-resources = [
+    {file = "importlib_resources-5.10.2-py3-none-any.whl", hash = "sha256:7d543798b0beca10b6a01ac7cafda9f822c54db9e8376a6bf57e0cbd74d486b6"},
+    {file = "importlib_resources-5.10.2.tar.gz", hash = "sha256:e4a96c8cc0339647ff9a5e0550d9f276fc5a01ffa276012b58ec108cfd7b8484"},
+]
+"jaraco.classes" = [
+    {file = "jaraco.classes-3.2.3-py3-none-any.whl", hash = "sha256:2353de3288bc6b82120752201c6b1c1a14b058267fa424ed5ce5984e3b922158"},
+    {file = "jaraco.classes-3.2.3.tar.gz", hash = "sha256:89559fa5c1d3c34eff6f631ad80bb21f378dbcbb35dd161fd2c6b93f5be2f98a"},
+]
+jeepney = [
+    {file = "jeepney-0.8.0-py3-none-any.whl", hash = "sha256:c0a454ad016ca575060802ee4d590dd912e35c122fa04e70306de3d076cce755"},
+    {file = "jeepney-0.8.0.tar.gz", hash = "sha256:5efe48d255973902f6badc3ce55e2aa6c5c3b3bc642059ef3a91247bcfcc5806"},
+]
 jmespath = [
     {file = "jmespath-1.0.1-py3-none-any.whl", hash = "sha256:02e2e4cc71b5bcab88332eebf907519190dd9e6e82107fa7f83b1003a6252980"},
     {file = "jmespath-1.0.1.tar.gz", hash = "sha256:90261b206d6defd58fdd5e85f478bf633a2901798906be2ad389150c5c60edbe"},
+]
+keyring = [
+    {file = "keyring-23.13.1-py3-none-any.whl", hash = "sha256:771ed2a91909389ed6148631de678f82ddc73737d85a927f382a8a1b157898cd"},
+    {file = "keyring-23.13.1.tar.gz", hash = "sha256:ba2e15a9b35e21908d0aaf4e0a47acc52d6ae33444df0da2b49d41a46ef6d678"},
+]
+more-itertools = [
+    {file = "more-itertools-9.0.0.tar.gz", hash = "sha256:5a6257e40878ef0520b1803990e3e22303a41b5714006c32a3fd8304b26ea1ab"},
+    {file = "more_itertools-9.0.0-py3-none-any.whl", hash = "sha256:250e83d7e81d0c87ca6bd942e6aeab8cc9daa6096d12c5308f3f92fa5e5c1f41"},
 ]
 pathspec = [
     {file = "pathspec-0.10.3-py3-none-any.whl", hash = "sha256:3c95343af8b756205e2aba76e843ba9520a24dd84f68c22b9f93251507509dd6"},
@@ -521,10 +615,6 @@ pycparser = [
     {file = "pycparser-2.21-py2.py3-none-any.whl", hash = "sha256:8ee45429555515e1f6b185e78100aea234072576aa43ab53aefcae078162fca9"},
     {file = "pycparser-2.21.tar.gz", hash = "sha256:e644fdec12f7872f86c58ff790da456218b10f863970249516d60a5eaca77206"},
 ]
-pyopenssl = [
-    {file = "pyOpenSSL-21.0.0-py2.py3-none-any.whl", hash = "sha256:8935bd4920ab9abfebb07c41a4f58296407ed77f04bd1a92914044b848ba1ed6"},
-    {file = "pyOpenSSL-21.0.0.tar.gz", hash = "sha256:5e2d8c5e46d0d865ae933bef5230090bdaf5506281e9eec60fa250ee80600cb3"},
-]
 pyscard = [
     {file = "pyscard-2.0.5-cp310-cp310-macosx_11_0_x86_64.whl", hash = "sha256:b6d6d090a36398a82afe6d6687e9d6f8039ffd610d3cccd206bff9efc225b379"},
     {file = "pyscard-2.0.5-cp310-cp310-win_amd64.whl", hash = "sha256:8444ed7332f34f40a0f41216b67a67320c4f0f7d6cef1d991138c19c86458642"},
@@ -537,9 +627,25 @@ python-dateutil = [
     {file = "python-dateutil-2.8.2.tar.gz", hash = "sha256:0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86"},
     {file = "python_dateutil-2.8.2-py2.py3-none-any.whl", hash = "sha256:961d03dc3453ebbc59dbdea9e4e11c5651520a876d0f4db161e8674aae935da9"},
 ]
-pyusb = [
-    {file = "pyusb-1.2.1-py3-none-any.whl", hash = "sha256:2b4c7cb86dbadf044dfb9d3a4ff69fd217013dbe78a792177a3feb172449ea36"},
-    {file = "pyusb-1.2.1.tar.gz", hash = "sha256:a4cc7404a203144754164b8b40994e2849fde1cfff06b08492f12fff9d9de7b9"},
+pywin32 = [
+    {file = "pywin32-305-cp310-cp310-win32.whl", hash = "sha256:421f6cd86e84bbb696d54563c48014b12a23ef95a14e0bdba526be756d89f116"},
+    {file = "pywin32-305-cp310-cp310-win_amd64.whl", hash = "sha256:73e819c6bed89f44ff1d690498c0a811948f73777e5f97c494c152b850fad478"},
+    {file = "pywin32-305-cp310-cp310-win_arm64.whl", hash = "sha256:742eb905ce2187133a29365b428e6c3b9001d79accdc30aa8969afba1d8470f4"},
+    {file = "pywin32-305-cp311-cp311-win32.whl", hash = "sha256:19ca459cd2e66c0e2cc9a09d589f71d827f26d47fe4a9d09175f6aa0256b51c2"},
+    {file = "pywin32-305-cp311-cp311-win_amd64.whl", hash = "sha256:326f42ab4cfff56e77e3e595aeaf6c216712bbdd91e464d167c6434b28d65990"},
+    {file = "pywin32-305-cp311-cp311-win_arm64.whl", hash = "sha256:4ecd404b2c6eceaca52f8b2e3e91b2187850a1ad3f8b746d0796a98b4cea04db"},
+    {file = "pywin32-305-cp36-cp36m-win32.whl", hash = "sha256:48d8b1659284f3c17b68587af047d110d8c44837736b8932c034091683e05863"},
+    {file = "pywin32-305-cp36-cp36m-win_amd64.whl", hash = "sha256:13362cc5aa93c2beaf489c9c9017c793722aeb56d3e5166dadd5ef82da021fe1"},
+    {file = "pywin32-305-cp37-cp37m-win32.whl", hash = "sha256:a55db448124d1c1484df22fa8bbcbc45c64da5e6eae74ab095b9ea62e6d00496"},
+    {file = "pywin32-305-cp37-cp37m-win_amd64.whl", hash = "sha256:109f98980bfb27e78f4df8a51a8198e10b0f347257d1e265bb1a32993d0c973d"},
+    {file = "pywin32-305-cp38-cp38-win32.whl", hash = "sha256:9dd98384da775afa009bc04863426cb30596fd78c6f8e4e2e5bbf4edf8029504"},
+    {file = "pywin32-305-cp38-cp38-win_amd64.whl", hash = "sha256:56d7a9c6e1a6835f521788f53b5af7912090674bb84ef5611663ee1595860fc7"},
+    {file = "pywin32-305-cp39-cp39-win32.whl", hash = "sha256:9d968c677ac4d5cbdaa62fd3014ab241718e619d8e36ef8e11fb930515a1e918"},
+    {file = "pywin32-305-cp39-cp39-win_amd64.whl", hash = "sha256:50768c6b7c3f0b38b7fb14dd4104da93ebced5f1a50dc0e834594bff6fbe1271"},
+]
+pywin32-ctypes = [
+    {file = "pywin32-ctypes-0.2.0.tar.gz", hash = "sha256:24ffc3b341d457d48e8922352130cf2644024a4ff09762a2261fd34c36ee5942"},
+    {file = "pywin32_ctypes-0.2.0-py2.py3-none-any.whl", hash = "sha256:9dc2d991b3479cc2df15930958b674a48a227d5361d413827a4cfd0b5876fc98"},
 ]
 pyyaml = [
     {file = "PyYAML-5.4.1-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:3b2b1824fe7112845700f815ff6a489360226a5609b96ec2190a45e62a9fc922"},
@@ -670,6 +776,10 @@ s3transfer = [
     {file = "s3transfer-0.6.0-py3-none-any.whl", hash = "sha256:06176b74f3a15f61f1b4f25a1fc29a4429040b7647133a463da8fa5bd28d5ecd"},
     {file = "s3transfer-0.6.0.tar.gz", hash = "sha256:2ed07d3866f523cc561bf4a00fc5535827981b117dd7876f036b0c1aca42c947"},
 ]
+secretstorage = [
+    {file = "SecretStorage-3.3.3-py3-none-any.whl", hash = "sha256:f356e6628222568e3af06f2eba8df495efa13b3b63081dafd4f7d9a7b7bc9f99"},
+    {file = "SecretStorage-3.3.3.tar.gz", hash = "sha256:2403533ef369eca6d2ba81718576c5e0f564d5cca1b58f73a8b23e7d4eeebd77"},
+]
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
     {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
@@ -708,15 +818,13 @@ typing-extensions = [
     {file = "typing_extensions-4.4.0-py3-none-any.whl", hash = "sha256:16fa4864408f655d35ec496218b85f79b3437c829e93320c7c9215ccfd92489e"},
     {file = "typing_extensions-4.4.0.tar.gz", hash = "sha256:1511434bb92bf8dd198c12b1cc812e800d4181cfcb867674e0f8279cc93087aa"},
 ]
-uhid-freebsd = [
-    {file = "uhid-freebsd-1.2.2.tar.gz", hash = "sha256:3670374111e9cde795323992809c1299c95c46e96b9bd888c3b340a4e1e733bc"},
-]
 urllib3 = [
     {file = "urllib3-1.26.14-py2.py3-none-any.whl", hash = "sha256:75edcdc2f7d85b137124a6c3c9fc3933cdeaa12ecb9a6a959f22797a0feca7e1"},
     {file = "urllib3-1.26.14.tar.gz", hash = "sha256:076907bf8fd355cde77728471316625a4d2f7e713c125f51953bb5b3eecf4f72"},
 ]
 yubikey-manager = [
-    {file = "yubikey-manager-3.1.2.tar.gz", hash = "sha256:7709c83aebb443259197a452772430edd1ac019e31a57a71ea33a90a4a7879f1"},
+    {file = "yubikey_manager-5.0.0-py3-none-any.whl", hash = "sha256:d76ac5847fddeb24cfd8d13be7255b746df3bfabc0ce8bdf0141ee60d5a43cf9"},
+    {file = "yubikey_manager-5.0.0.tar.gz", hash = "sha256:c741747200ced1b5803dfdef6718b07a41e109ccb03dd7b72d3a307a3fb33bb5"},
 ]
 zipp = [
     {file = "zipp-3.11.0-py3-none-any.whl", hash = "sha256:83a28fcb75844b5c0cdaf5aa4003c2d728c77e05f5aeabe8e95e56727005fbaa"},
