@@ -105,14 +105,14 @@ a *Virtual MFA device*.
 3. Instead of showing the QR code, click on `Show secret key` and copy the key.
 4. On a command line, run
    ```
-   $ ykman oath add -t arn:aws:iam::${ACCOUNT_ID}:mfa/${IAM_USERNAME} ${MFA_SECRET}
+   $ ykman oath accounts add -t arn:aws:iam::${ACCOUNT_ID}:mfa/${IAM_USERNAME} ${MFA_SECRET}
    ```
    The strange string `arn:aws:iam::${ACCOUNT_ID}:mfa/${IAM_USERNAME}` will
    be your user's MFA serial after you have set up everything. The AWS console
    will not tell you the MFA serial in advance, but by replacing the account id
    and IAM username, you can build it on your own, e.g.:
    ```
-   $ ykman oath add -t arn:aws:iam::123456789012:mfa/tommie-lie ABCD1234...
+   $ ykman oath accounts add -t arn:aws:iam::123456789012:mfa/tommie-lie ABCD1234...
    ```
    
    The above command requires you to touch your YubiKey to generate
@@ -120,7 +120,7 @@ a *Virtual MFA device*.
    every time you authenticate.
 5. Now you have to enter two **consecutive** MFA codes into the AWS website
    to assign your key to your AWS login. Just run
-   `ykman oath code arn:aws:iam::${ACCOUNT_ID}:mfa/${IAM_USERNAME}`
+   `ykman oath accounts code arn:aws:iam::${ACCOUNT_ID}:mfa/${IAM_USERNAME}`
    to get an authentication code.
    The codes are re-generated every 30 seconds, so you have to run this command
    twice with about 30 seconds in between to get two distinct codes.
